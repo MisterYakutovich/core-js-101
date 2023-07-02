@@ -285,7 +285,6 @@ function getSecondItems(arr) {
 function propagateItemsByPositionIndex(arr) {
   if (arr.length === 0 || arr.length === 1) return arr;
   return arr.reduce((acc, v, i) => {
-    console.log(i);
     acc.push(...Array(i + 1).fill(v));
     return acc;
   }, []);

@@ -386,19 +386,19 @@ function toNaryString(num, n) {
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
 function getCommonDirectoryPath(pathes) {
-  let curr = 0; let
-    breakPoint = 0;
-  while (true) {
-    let isSame = true;
-    for (let i = 0; i < pathes.length; i += 1) {
-      if (pathes[0][curr] !== pathes[i][curr]) isSame = false;
+
+  const basic = pathes[0];
+  let result = '';
+  for (let i = 0; i < basic.length; i += 1) {
+    const char = basic[i];
+    for (let j = 1; j < pathes.length; j += 1) {
+      if (char !== pathes[j][i]) {
+        return result.slice(0, result.lastIndexOf('/') + 1);
+      }
     }
-    if (isSame) {
-      if (pathes[0][curr] === '/') breakPoint = curr + 1;
-      curr += 1;
-    } else break;
+    result += char;
   }
-  return pathes[0].slice(0, breakPoint);
+  return '';
 }
 
 
