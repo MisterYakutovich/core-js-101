@@ -52,8 +52,7 @@ function getCircleCircumference(radius) {
  *  -3, 3  => 0
  */
 function getAverage(value1, value2) {
-  return value1 / 2 + value2 / 2
- 
+  return value1 / 2 + value2 / 2;
 }
 
 /**
@@ -126,8 +125,8 @@ function getLinearEquationRoot(a, b) {
 function getAngleBetweenVectors(x1, y1, x2, y2) {
   const deg1 = 180 / Math.PI * Math.atan2(y1, x1);
   const deg2 = 180 / Math.PI * Math.atan2(y2, x2);
-  const degResult = deg1 - deg2;   
-    return Math.abs((degResult * Math.PI) / 180);
+  const degResult = deg1 - deg2;
+  return Math.abs((degResult * Math.PI) / 180);
 }
 
 
@@ -201,8 +200,8 @@ function getParallelepipedDiagonal(a, b, c) {
  *   1678, 2  => 1700
  *   1678, 3  => 2000
  */
-function roundToPowerOfTen(num, pow ) {
- return Math.round(num / Math.pow(10, pow)) * Math.pow(10,pow)
+function roundToPowerOfTen(num, pow) {
+  return Math.round(num / Math.pow(10, pow)) * Math.pow(10, pow);
 }
 
 /**
@@ -223,15 +222,11 @@ function roundToPowerOfTen(num, pow ) {
  *   17 => true
  */
 function isPrime(n) {
-  if (n == 2 || n == 3)
+  if (n == 2 || n == 3) return true;
+  if (n <= 1 || n % 2 == 0 || n % 3 == 0) return false;
+  for (let i = 5; i * i <= n; i += 6) if (n % i == 0 || n % (i + 2) == 0) return false;
   return true;
-if (n <= 1 || n % 2 == 0 || n % 3 == 0)
-  return false;  
-for (let i = 5; i * i <= n ; i+=6)
-  if (n % i == 0 || n % (i + 2) == 0)
-    return false;
-return true;
- /* if (n == 2) {
+  /* if (n == 2) {
     return true;
   }
   for (let i = 2; i < n; i++) {
@@ -240,7 +235,7 @@ return true;
     } if (n % i != 0) {
       return true;
     }
-  }*/
+  } */
 }
 
 /**

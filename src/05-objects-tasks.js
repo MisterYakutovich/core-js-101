@@ -20,16 +20,16 @@
  *    console.log(r.height);      // => 20
  *    console.log(r.getArea());   // => 200
  */
-function Rectangle( width, height ) {
-    this.width = width;
-    this.height = height;
+function Rectangle(width, height) {
+  this.width = width;
+  this.height = height;
 }
 
 Rectangle.prototype = {
-    getArea () {
-        return this.width * this.height;
-    }
-}
+  getArea() {
+    return this.width * this.height;
+  },
+};
 
 
 /**
@@ -42,9 +42,9 @@ Rectangle.prototype = {
  *    [1,2,3]   =>  '[1,2,3]'
  *    { width: 10, height : 20 } => '{"height":10,"width":20}'
  */
-function getJSON( obj ) {
-  let json = JSON.stringify(obj)
-  return json
+function getJSON(obj) {
+  const json = JSON.stringify(obj);
+  return json;
 }
 
 
@@ -59,8 +59,8 @@ function getJSON( obj ) {
  *    const r = fromJSON(Circle.prototype, '{"radius":10}');
  *
  */
-function fromJSON( proto, json ) {
-  let obj =  JSON.parse(json);
+function fromJSON(proto, json) {
+  const obj = JSON.parse(json);
   obj.__proto__ = proto;
   return obj;
 }

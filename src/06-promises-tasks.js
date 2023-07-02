@@ -28,17 +28,16 @@
  *      .catch((error) => console.log(error.message)) // 'Error: Wrong parameter is passed!
  *                                                    //  Ask her again.';
  */
-function willYouMarryMe( isPositiveAnswer ) {
+function willYouMarryMe(isPositiveAnswer) {
   return new Promise((resolve, reject) => {
-    if (isPositiveAnswer===true){
+    if (isPositiveAnswer === true) {
       resolve('Hooray!!! She said "Yes"!');
     }
-    if (isPositiveAnswer===false){ 
+    if (isPositiveAnswer === false) {
       resolve('Oh no, she said "No".');
-    }else{
+    } else {
       reject(new Error('Wrong parameter is passed! Ask her again.'));
     }
-     
   });
 }
 
@@ -58,7 +57,7 @@ function willYouMarryMe( isPositiveAnswer ) {
  *    })
  *
  */
-function processAllPromises( array ) {
+function processAllPromises(array) {
   return Promise.all(array);
 }
 
@@ -81,7 +80,7 @@ function processAllPromises( array ) {
  *    })
  *
  */
-function getFastestPromise( array ) {
+function getFastestPromise(array) {
   return Promise.race(array);
 }
 
@@ -102,7 +101,7 @@ function getFastestPromise( array ) {
  *    });
  *
  */
-async function chainPromises( array, action ) {
+async function chainPromises(array, action) {
   const arr = await new Promise((resolve) => {
     const values = [];
     array.map((i) => i.then((result) => {
