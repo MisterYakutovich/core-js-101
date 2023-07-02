@@ -324,7 +324,7 @@ function get3TopItems(arr) {
  *   [ 1, '2' ] => 1
  */
 function getPositivesCount(arr) {
-  return arr.reduce((prev, curr) => (curr > 0 ? prev + 1 : prev), 0);
+  return arr.filter((item) => (item > 0 && typeof item === 'number')).length;
 }
 
 /**
@@ -592,18 +592,7 @@ function selectMany(arr, childrenSelector) {
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
 function getElementByIndexes(arr, indexes) {
-  return indexes.reduce((prev, curr, index) => {
-    if (index !== indexes.length - 1) arr = arr[curr];
-    else return arr[curr];
-
-    return null;
-  }, null);
-  // return indexes.reduce((prev, curr, index) => {
-  // if (index !== indexes.length - 1) arr = arr[curr];
-  //  else return arr[curr];
-
-  //  return null;
-  // }, null);
+  return indexes.reduce((acum, item) => acum[item], arr);
 }
 
 

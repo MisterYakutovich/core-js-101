@@ -136,17 +136,15 @@ function isTriangle(a, b, c) {
  *
  */
 function doRectanglesOverlap(rect1, rect2) {
-  if (rect1.top > rect2.top || rect1.left > rect2.left) {
-    const tmp = rect1;
-    tmp = rect2;
-    rect1 = rect2;
-    rect2 = tmp;
-  }
-
-  return (rect1.top <= rect2.top)
-    && (rect1.top + rect1.width >= rect2.top)
-    && (rect1.left <= rect2.left)
-    && (rect1.left + rect1.height >= rect2.left);
+  const x1 = rect1.top;
+  const y1 = rect1.left;
+  const x2 = rect1.top + rect1.height;
+  const y2 = rect1.top + rect1.width;
+  const x3 = rect2.top;
+  const y3 = rect2.left;
+  const x4 = rect2.top + rect2.height;
+  const y4 = rect2.top + rect2.width;
+  return !(x2 <= x3 || y2 <= y3 || x1 >= x4 || y1 >= y4);
 }
 
 
@@ -229,15 +227,12 @@ function findFirstSingleChar(str) {
  *
  */
 function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
-  if (b < a) {
-    const tmp = a;
-    a = b;
-    b = tmp;
-  }
-  const before = (isStartIncluded ? '[' : '(');
-  const after = (isEndIncluded ? ']' : ')');
-
-  return `${before}${a}, ${b}${after}`;
+  const temp = JSON.stringify([a, b].sort((first, second) => first - second));
+  return [...temp].map((item) => {
+    if (item === '[' && !isStartIncluded) return '(';
+    if (item === ']' && !isEndIncluded) return ')';
+    return item;
+  }).join('').replace(/,/, ', ');
 }
 
 
@@ -341,19 +336,15 @@ function getDigitalRoot(/* num */) {
  *   '{[(<{[]}>)]}' = true
  */
 function isBracketsBalanced(str) {
-  const stack = [];
-  const open = ['[', '{', '(', '<'];
-  const close = [']', '}', ')', '>'];
-  for (let i = 0; i < str.length; i += 1) {
-    const current = str[i];
-    if (open.indexOf(current) !== -1) {
-      stack.push(current);
-      continue;
+  let copyStr = str;
+  if (str.length % 2 !== 0) return false;
+  const parentBracket = ['[]', '{}', '()', '<>'];
+  for (let i = 0; i < 5; i += 1) {
+    for (let j = 0; j < parentBracket.length; j += 1) {
+      copyStr = copyStr.replace(parentBracket[j], '');
     }
-    const top = stack.pop();
-    if (open.indexOf(top) !== close.indexOf(current)) return false;
   }
-  return stack.length === 0;
+  return copyStr === '';
 }
 
 

@@ -114,13 +114,15 @@ function memoize(func) {
  */
 function retry(func, attempts) {
   return () => {
-    while (attempts += 1 > 0) {
+    for (let i = 0; i < attempts; i += 1) {
       try {
         return func();
-      } catch (e) {
-
+      } catch (err) {
+        i += 1;
+        i -= 1;
       }
     }
+    return '';
   };
 }
 
@@ -149,17 +151,17 @@ function retry(func, attempts) {
  *
  */
 function logger(func, logFunc) {
-  return function () {
-    const args = Array.from(arguments);
-    let callString = JSON.stringify(args);
-
-    callString = callString.substr(1, callString.length - 2);
-    callString = `${func.name}(${callString})`;
-
-    logFunc(`${callString} starts`);
+  return (...args) => {
+    let logs = '';
+    args.forEach((item) => {
+      logs += `${JSON.stringify(item)},`;
+    });
+    if (logs[logs.length - 1] === ',') logs = logs.slice(0, logs.length - 1);
+    const start = `${func.name}(${logs}) starts`;
+    logFunc(start);
     const result = func(...args);
-    logFunc(`${callString} ends`);
-
+    const end = `${func.name}(${logs}) ends`;
+    logFunc(end);
     return result;
   };
 }
@@ -179,14 +181,7 @@ function logger(func, logFunc) {
  *   partialUsingArguments(fn, 'a','b','c','d')() => 'abcd'
  */
 function partialUsingArguments(fn, ...args1) {
-  let args = Array.from(arguments);
-  args.splice(0, 1);
-
-  return function () {
-    args = args.concat(Array.from(arguments));
-
-    return fn(...args);
-  };
+  return (...args2) => fn(...args1, ...args2);
 }
 
 
@@ -208,7 +203,11 @@ function partialUsingArguments(fn, ...args1) {
  *   getId10() => 11
  */
 function getIdGeneratorFunction(startFrom) {
-  return () => startFrom +=1;
+  let count = startFrom - 1;
+  return () => {
+    count += 1;
+    return count;
+  };
 }
 
 
