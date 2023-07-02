@@ -45,7 +45,7 @@ function getComposition(f, g) {
  *
  */
 function getPowerFunction(exponent) {
-  return (x) => Math.pow(x, exponent);
+  return (x) => (x ** exponent);
 }
 
 
@@ -114,7 +114,7 @@ function memoize(func) {
  */
 function retry(func, attempts) {
   return () => {
-    while (attempts++ > 0) {
+    while (attempts += 1 > 0) {
       try {
         return func();
       } catch (e) {
@@ -157,7 +157,7 @@ function logger(func, logFunc) {
     callString = `${func.name}(${callString})`;
 
     logFunc(`${callString} starts`);
-    const result = func.apply(null, args);
+    const result = func(...args);
     logFunc(`${callString} ends`);
 
     return result;
@@ -185,7 +185,7 @@ function partialUsingArguments(fn, ...args1) {
   return function () {
     args = args.concat(Array.from(arguments));
 
-    return fn.apply(null, args);
+    return fn(...args);
   };
 }
 
@@ -208,7 +208,7 @@ function partialUsingArguments(fn, ...args1) {
  *   getId10() => 11
  */
 function getIdGeneratorFunction(startFrom) {
-  return () => startFrom++;
+  return () => startFrom +=1;
 }
 
 

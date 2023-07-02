@@ -28,13 +28,13 @@
  *
  */
 function getFizzBuzz(num) {
-  if (num % 5 == 0 && num % 3 == 0) {
+  if (num % 5 === 0 && num % 3 === 0) {
     return 'FizzBuzz';
   }
-  if (num % 3 == 0) {
+  if (num % 3 === 0) {
     return 'Fizz';
   }
-  if (num % 5 == 0) {
+  if (num % 5 === 0) {
     return 'Buzz';
   }
   return num;
@@ -54,7 +54,7 @@ function getFizzBuzz(num) {
  */
 function getFactorial(n) {
   let result = 1;
-  for (let i = 2; i <= n; i++) result *= i;
+  for (let i = 2; i <= n; i += 1) result *= i;
   return result;
 }
 
@@ -73,7 +73,7 @@ function getFactorial(n) {
  */
 function getSumBetweenNumbers(n1, n2) {
   let sum = 0;
-  for (let i = n1; i <= n2; i++) {
+  for (let i = n1; i <= n2; i += 1) {
     sum += i;
   }
   return sum;
@@ -138,6 +138,7 @@ function isTriangle(a, b, c) {
 function doRectanglesOverlap(rect1, rect2) {
   if (rect1.top > rect2.top || rect1.left > rect2.left) {
     const tmp = rect1;
+    tmp = rect2;
     rect1 = rect2;
     rect2 = tmp;
   }
@@ -176,7 +177,7 @@ function doRectanglesOverlap(rect1, rect2) {
  *
  */
 function isInsideCircle(circle, point) {
-  const result = Math.pow(circle.center.x - point.x, 2) + Math.pow(circle.center.y - point.y, 2);
+  const result = ((circle.center.x - point.x) ** 2) + ((circle.center.y - point.y) ** 2);
   const resultSqrt = Math.sqrt(result);
   return resultSqrt < circle.radius;
 }
@@ -195,10 +196,10 @@ function isInsideCircle(circle, point) {
  */
 function findFirstSingleChar(str) {
   const map = new Map();
-  for (let i = 0; i < str.length; i++) {
+  for (let i = 0; i < str.length; i += 1) {
     const c = str[i];
     const dist = map.get(c) || str.indexOf(c, i + 1);
-    if (dist == -1) return c;
+    if (dist === -1) return c;
     map.set(c, dist);
   }
   return null;
@@ -343,16 +344,16 @@ function isBracketsBalanced(str) {
   const stack = [];
   const open = ['[', '{', '(', '<'];
   const close = [']', '}', ')', '>'];
-  for (let i = 0; i < str.length; i++) {
+  for (let i = 0; i < str.length; i += 1) {
     const current = str[i];
-    if (open.indexOf(current) != -1) {
+    if (open.indexOf(current) !== -1) {
       stack.push(current);
       continue;
     }
     const top = stack.pop();
-    if (open.indexOf(top) != close.indexOf(current)) return false;
+    if (open.indexOf(top) !== close.indexOf(current)) return false;
   }
-  return stack.length == 0;
+  return stack.length === 0;
 }
 
 
@@ -398,10 +399,12 @@ function getCommonDirectoryPath(pathes) {
     breakPoint = 0;
   while (true) {
     let isSame = true;
-    for (let i = 0; i < pathes.length; i++) if (pathes[0][curr] != pathes[i][curr]) isSame = false;
+    for (let i = 0; i < pathes.length; i += 1) {
+      if (pathes[0][curr] !== pathes[i][curr]) isSame = false;
+    }
     if (isSame) {
-      if (pathes[0][curr] == '/') breakPoint = curr + 1;
-      curr++;
+      if (pathes[0][curr] === '/') breakPoint = curr + 1;
+      curr += 1;
     } else break;
   }
   return pathes[0].slice(0, breakPoint);
@@ -432,12 +435,14 @@ function getMatrixProduct(m1, m2) {
   const rowsM2 = m2.length;
   const colsM2 = m2[0].length;
   const C = [];
-  if (colsM1 != rowsM2) return false;
-  for (var i = 0; i < rowsM1; i++) C[i] = [];
-  for (let k = 0; k < colsM2; k++) {
-    for (var i = 0; i < rowsM1; i++) {
+  if (colsM1 !== rowsM2) return false;
+  for (let i = 0; i < rowsM1; i += 1) {
+    C[i] = [];
+  }
+  for (let k = 0; k < colsM2; k += 1) {
+    for (let i = 0; i < rowsM1; i += 1) {
       let t = 0;
-      for (let j = 0; j < rowsM2; j++) t += m1[i][j] * m2[j][k];
+      for (let j = 0; j < rowsM2; j += 1) t += m1[i][j] * m2[j][k];
       C[i][k] = t;
     }
   }
@@ -492,7 +497,7 @@ function evaluateTicTacToePosition(position) {
   coordinates.forEach((value) => {
     let isWin = true;
     let playerCode;
-    for (let i = 1; i < value.length; i++) {
+    for (let i = 1; i < value.length; i += 1) {
       const x1 = value[i - 1].x;
       const y1 = value[i - 1].y;
       const x2 = value[i].x;
@@ -500,10 +505,10 @@ function evaluateTicTacToePosition(position) {
 
       playerCode = position[y2][x2];
 
-      if (position[y2][x2] != position[y1][x1]) isWin = false;
+      if (position[y2][x2] !== position[y1][x1]) isWin = false;
     }
 
-    if (isWin && playerCode != undefined) winner.add(playerCode);
+    if (isWin && playerCode !== undefined) winner.add(playerCode);
   });
 
   return winner.values().next().value;
