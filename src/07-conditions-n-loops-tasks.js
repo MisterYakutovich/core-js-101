@@ -386,7 +386,7 @@ function toNaryString(num, n) {
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
 function getCommonDirectoryPath(pathes) {
-  let curr = 0; let
+ /* let curr = 0; let
     breakPoint = 0;
   while (true) {
     let isSame = true;
@@ -399,9 +399,20 @@ function getCommonDirectoryPath(pathes) {
     } else break;
   }
   return pathes[0].slice(0, breakPoint); 
- 
+}*/
+const basic = pathes[0];
+let result = '';
+for (let i = 0; i < basic.length; i += 1) {
+  const char = basic[i];
+  for (let j = 1; j < pathes.length; j += 1) {
+    if (char !== pathes[j][i]) {
+      return result.slice(0, result.lastIndexOf('/') + 1);
+    }
+  }
+  result += char;
 }
-
+return '';
+}
 
 /**
  * Returns the product of two specified matrixes.
